@@ -22,15 +22,14 @@ const api = axios.create({
 })
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const message = error.response?.data?.detail
-      || error.response?.data?.message
-      || error.message
-      || 'An error occurred'
+  response => response,
+  error => {
+    const data = error.response?.data
+    const message = data?.detail ?? data?.title ?? 'Something went wrong'
+    const status = data?.status ?? error.response?.status
 
-    const statusCode = error.response?.status
-    return Promise.reject(new ApiError(message, statusCode))
+    const apiError = new ApiError(message, status)
+    return Promise.reject(apiError)
   }
 )
 

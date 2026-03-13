@@ -1,3 +1,5 @@
+import type { ComboDatasetConfig, DatasetConfig } from '@/features/constants/datasets.ts'
+
 export interface License {
   name: string
   termsLink: string
@@ -30,4 +32,10 @@ export interface CachedDataPointReadDto {
   endTime: string
   value: number
   cachedAtUtc: string
+}
+
+export type SelectedDataset = DatasetConfig | ComboDatasetConfig
+
+export function isComboDataset(d: SelectedDataset): d is ComboDatasetConfig {
+  return typeof d.id === 'string'
 }
