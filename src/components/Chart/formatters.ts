@@ -7,8 +7,8 @@ export function resolveCssVar(value: string): string {
   return getComputedStyle(document.body).getPropertyValue(`--${match[1]}`).trim() || value
 }
 
-export function fmtDate(self: uPlot, rawValue: number, seriesIdx: number, foundIdx: number | null, foundValue: number) {
-  void self; void seriesIdx; void foundIdx; void foundValue
+export function fmtDate(self: uPlot, rawValue: number, seriesIdx: number, idx: number | null) {
+  void self; void seriesIdx; void idx
   return new Date(rawValue * 1000).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
 }
 

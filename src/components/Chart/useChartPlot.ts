@@ -3,7 +3,7 @@ import uPlot from 'uplot'
 import { useThemeConfig } from '@/hooks/use-theme-config'
 import { useTheme } from '@/hooks/use-theme'
 import { resolveCssVar, fmtDate, fmtTick } from './formatters'
-import { tooltipPlugin } from './tooltipPlugin'
+import { tooltipPlugin } from './tooltipplugin'
 import { rangeSliderPlugin } from './rangeSliderPlugin'
 import type { ChartProps } from './types'
 
