@@ -13,6 +13,8 @@ if (!isDevelopment) {
   baseURL = import.meta.env.VITE_API_URL
 }
 
+export const BASE_URL = baseURL?.replace(/\/api\/.*$/, '') ?? 'http://localhost:5143'
+
 const api = axios.create({
   baseURL,
   headers: {
@@ -27,9 +29,7 @@ api.interceptors.response.use(
     const data = error.response?.data
     const message = data?.detail ?? data?.title ?? 'Something went wrong'
     const status = data?.status ?? error.response?.status
-
-    const apiError = new ApiError(message, status)
-    return Promise.reject(apiError)
+    return Promise.reject(new ApiError(message, status))
   }
 )
 

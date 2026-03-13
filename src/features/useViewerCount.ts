@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
+
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 
-const BASE = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/.*$/, '')
-  ?? 'http://localhost:5143'
+import { BASE_URL } from '../api/index.ts'
 
-const HUB_URL = `${BASE}/hubs/dashboard`
+const HUB_URL = `${BASE_URL}/hubs/dashboard`
 
 export function useViewerCount() {
   const [count, setCount] = useState<number | null>(null)
