@@ -81,7 +81,7 @@ export default function SectionRenderer({
 					</h1>
 					{showExport && (
 						<div className="flex items-center space-x-2">
-							Let's have somthing here later
+							{/* Let's have something here later */}
 						</div>
 					)}
 				</div>
@@ -97,7 +97,7 @@ export default function SectionRenderer({
 				<h1 className="text-2xl font-bold tracking-tight">{title}</h1>
 				{showExport && (
 					<div className="flex items-center space-x-2">
-						Let's have somthing here later
+						{/* Let's have somthing here later */}
 					</div>
 				)}
 			</div>
