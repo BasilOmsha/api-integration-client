@@ -5,14 +5,14 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-		alias: {
-			'@': path.resolve(__dirname, './src'),
-		},
-	},
-   server: {
-            host: true,
-            open: !('SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env),
-        },
+    plugins: [react(), tailwindcss()],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src')
+        }
+    },
+    server: {
+        host: true,
+        open: !('SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env)
+    }
 })

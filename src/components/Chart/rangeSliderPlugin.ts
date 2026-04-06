@@ -10,6 +10,7 @@ export function rangeSliderPlugin(): uPlot.Plugin {
     let chart: uPlot
     let fullMin: number
     let fullMax: number
+    let resizeObserver: ResizeObserver
 
     function getPlotMetrics() {
         const bbox = chart.bbox
@@ -53,8 +54,8 @@ export function rangeSliderPlugin(): uPlot.Plugin {
         let startMin: number
         let startMax: number
 
-        const onMove = (e: MouseEvent) => {
-            const dx = e.clientX - startX
+        const onMove = (e: MouseEvent | TouchEvent) => {
+            const dx = ('touches' in e ? e.touches[0].clientX : e.clientX) - startX
             if (mode === 'left') {
                 const newVal = pxToVal(valToPx(startMin) + dx)
                 const curMax = chart.scales.x.max ?? fullMax
@@ -85,19 +86,25 @@ export function rangeSliderPlugin(): uPlot.Plugin {
         const onUp = () => {
             document.removeEventListener('mousemove', onMove)
             document.removeEventListener('mouseup', onUp)
+            document.removeEventListener('touchmove', onMove)
+            document.removeEventListener('touchend', onUp)
             if (mode === 'pan') selection.style.cursor = 'grab'
         }
 
-        el.addEventListener('mousedown', (e: MouseEvent) => {
+        function onStart(e: MouseEvent | TouchEvent) {
             e.preventDefault()
             e.stopPropagation()
-            startX = e.clientX
+            startX = 'touches' in e ? e.touches[0].clientX : e.clientX
             startMin = chart.scales.x.min ?? fullMin
             startMax = chart.scales.x.max ?? fullMax
             if (mode === 'pan') selection.style.cursor = 'grabbing'
             document.addEventListener('mousemove', onMove)
             document.addEventListener('mouseup', onUp)
-        })
+            document.addEventListener('touchmove', onMove, { passive: false })
+            document.addEventListener('touchend', onUp)
+        }
+        el.addEventListener('mousedown', onStart)
+        el.addEventListener('touchstart', onStart, { passive: false })
     }
 
     function init(u: uPlot) {
@@ -138,6 +145,8 @@ export function rangeSliderPlugin(): uPlot.Plugin {
         }
 
         requestAnimationFrame(() => sync())
+        resizeObserver = new ResizeObserver(() => requestAnimationFrame(() => sync()))
+        resizeObserver.observe(slider)
         makeDraggable(handleL, 'left')
         makeDraggable(handleR, 'right')
         makeDraggable(selection, 'pan')
@@ -149,6 +158,7 @@ export function rangeSliderPlugin(): uPlot.Plugin {
     return {
         hooks: {
             ready: [init],
+            destroy: [() => resizeObserver?.disconnect()],
             setScale: [
                 (_u: uPlot, key: string) => {
                     if (!slider || key !== 'x') return
