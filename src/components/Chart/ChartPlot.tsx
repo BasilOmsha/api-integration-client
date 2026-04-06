@@ -7,7 +7,7 @@ interface ChartPlotProps {
 
 export function ChartPlot({ containerRef, isEmpty }: ChartPlotProps) {
     return (
-        <div className="relative flex-1 min-h-[340px] flex flex-col">
+        <div className="relative flex-1 min-h-[380px] flex flex-col pb-6">
             <div
                 ref={containerRef}
                 className="absolute inset-x-0 bottom-0 top-[15px] overflow-visible"

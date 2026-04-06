@@ -53,7 +53,9 @@ export function ChartCard({
                         )}
                     </Button>
                 </CardHeader>
-                <CardContent className="flex-1 min-h-0 flex flex-col">
+                <CardContent
+                    className={`flex-1 min-h-0 flex flex-col ${isFullscreen ? 'overflow-y-auto' : ''}`}
+                >
                     {isLoading ? <Skeleton className="w-full flex-1 min-h-75" /> : children}
                 </CardContent>
             </Card>
