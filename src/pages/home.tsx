@@ -99,7 +99,7 @@ export default function Home() {
             </section>
 
             <footer className="border-t px-4 sm:px-6 py-4 text-center text-xs text-muted-foreground">
-                Built with Finnish open data • {new Date().getFullYear()}
+                Basil Omsha • {new Date().getFullYear()}
             </footer>
         </div>
     )
